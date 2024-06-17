@@ -8,6 +8,8 @@ from tkinter import messagebox
 from CTkTable import CTkTable 
 import string
 
+ctk.set_appearance_mode('System')
+
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -155,3 +157,4 @@ class App(ctk.CTk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
