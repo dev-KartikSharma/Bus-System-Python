@@ -5,6 +5,7 @@ import string
 
 # Stations list (A to Z)
 stations = list(string.ascii_uppercase)
+
 passengers = {}
 currentStationIndex = 0
 
@@ -13,7 +14,14 @@ class BusStation:
         self.stations = stations
         self.current_station_index = 0
         self.station_change_callback = None
-        
+
+    # def remove_stations(self):
+    #     global currentStationIndex
+    #     while True:
+    #         stations.remove(currentStationIndex)
+    #         print(stations)
+    #         time.sleep(5)
+
     def changing_station(self):
         global currentStationIndex
         while True:
@@ -26,6 +34,7 @@ class BusStation:
             next_station_index = (currentStationIndex + 1) % len(self.stations)
             currentStationIndex = next_station_index
             time.sleep(5)
+            
     # this function was for console app but this is useless in gui app    
     # def destination_station(self):
     #     departure_index = currentStationIndex
@@ -36,7 +45,7 @@ class BusStation:
     def register_station_change_callback(self, callback):
         self.station_change_callback = callback
     
-class TicketFair:
+class TicketFare:
     def __init__(self, stations):
         self.stations = stations
         self.fare_per_station = 10
@@ -59,7 +68,7 @@ class PassengersData:
     def __init__(self, stations):
         self.passengers = passengers
         self.stations = stations
-
+        self.userList = []
     def generate_random_string(self, length=8):
         characters = string.ascii_letters + string.digits
         random_string = ''.join(random.choices(characters, k=length))
@@ -72,11 +81,16 @@ class PassengersData:
             'Destination Station': destination_station,
             'Ticket Fare': fare
         }
-        print(f"Passenger ID: {p_id}")
-        print(self.passengers)
+        self.userList.append([p_id,departure_station,destination_station,fare])
+        # print(f"Passenger ID: {p_id}")
+        # print(self.passengers)
+        
+    def removeData(self,row):
+        self.userList.remove(row)
+        print(self.userList)
 
     def step_down(self, current_station):   
         for p_id, data in list(self.passengers.items()):
             if data['Destination Station'] == current_station:
-                print(f"Passenger {p_id}, your destination {data['Destination Station']} has arrived. Please step down the bus.")
-                del self.passengers[p_id]
+                return f"Passenger {p_id}, your destination {data['Destination Station']} has arrived. Please step down the bus."
+                
